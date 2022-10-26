@@ -1,4 +1,6 @@
 import React, { useState } from "react";
+import { Form } from "react-bootstrap";
+
 
 const FormDivisa = () => {
   const [cant, setCant] = useState("");
@@ -6,19 +8,7 @@ const FormDivisa = () => {
   const [divdo, setDivdo] = useState("");
   const [resultado, setRes] = useState("");
 
-  const onChange = (e) => {
-    console.log(e.target.value);
-    if (e.target.name === "divun") {
-      setDivun(e.target.value);
-    } else if (e.target.name === "divdo") {
-      setDivdo(e.target.value);
-    }
-    if (e.target.name === "cant") {
-      setCant(e.target.value);
-    }
-  };
-  const onSubmit = (e) => {
-    e.preventDefault();
+  const conversor =() =>{
     let x = parseFloat(cant);
     let x2 = 0;
     if (divun === "MXN") {
@@ -101,23 +91,40 @@ const FormDivisa = () => {
       } else if (divdo === "MXN") {
         x2 = 31.06;
       }
-      
     }
     let x3 = x * x2;
     setRes(x3);
     console.log(divun);
     console.log(divdo);
     console.log(cant);
+  }
+
+  const onChange = (e) => {
+    console.log(e.target.value);
+    if (e.target.name === "divun") {
+      setDivun(e.target.value);
+      conversor();
+    } else if (e.target.name === "divdo") {
+      setDivdo(e.target.value);
+    }
+    if (e.target.name === "cant") {
+      setCant(e.target.value);
+      conversor();
+    }
+  };
+  const onSubmit = (e) => {
+    e.preventDefault();
+    conversor();
   };
 
   return (
-    <form action="" onSubmit={onSubmit}>
+    <Form action="" onSubmit={onSubmit}>
       <p>Cantidad total: {resultado}</p>
       <p>Cantidad a convertir: {cant}</p>
       <p>Divisa por convertir: {divun}</p>
       <p>Divisa a convertrir {divdo}</p>
 
-      <div>
+      <Form.Group>
         <label htmlFor="cant">Cantidad a cambiar</label>
         <input
           type="text"
@@ -126,9 +133,9 @@ const FormDivisa = () => {
           value={cant}
           onChange={onChange}
         />
-      </div>
-      <div>
-        <select
+      </Form.Group>
+      <Form.Group>
+        <Form.Select
           id="divun"
           name="divun"
           value={divun}
@@ -140,7 +147,7 @@ const FormDivisa = () => {
           <option value="BTC">BTC</option>
           <option value="ETH">WTH</option>
           <option value="DODGE">DODGE</option>
-        </select>
+        </Form.Select>
         <select
           id="divdo"
           name={"divdo"}
@@ -155,9 +162,9 @@ const FormDivisa = () => {
           <option value="ETH">WTH</option>
           <option value="DODGE">DODGE</option>
         </select>
-      </div>
+      </Form.Group>
       <button>Cambiar</button>
-    </form>
+    </Form>
   );
 };
 export default FormDivisa;
