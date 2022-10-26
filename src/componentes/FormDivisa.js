@@ -3,17 +3,17 @@ import { Form } from "react-bootstrap";
 
 
 const FormDivisa = () => {
-  const [cant, setCant] = useState("");
-  const [divun, setDivun] = useState("");
-  const [divdo, setDivdo] = useState("");
-  const [resultado, setRes] = useState("");
+  const [cant, setCant] = useState("0");
+  const [divun, setDivun] = useState("MXN");
+  const [divdo, setDivdo] = useState("MXN");
+  const [resultado, setRes] = useState("0");
 
   const conversor =() =>{
     let x = parseFloat(cant);
     let x2 = 0;
     if (divun === "MXN") {
       if (divdo === "MXN") {
-        x2 = 1;
+        x2 = 1.0;
       }
       if (divdo === "USD") {
         x2 = 0.05;
@@ -97,6 +97,8 @@ const FormDivisa = () => {
     console.log(divun);
     console.log(divdo);
     console.log(cant);
+    console.log(resultado);
+
   }
 
   const onChange = (e) => {
@@ -106,12 +108,14 @@ const FormDivisa = () => {
       conversor();
     } else if (e.target.name === "divdo") {
       setDivdo(e.target.value);
+      conversor();
     }
     if (e.target.name === "cant") {
       setCant(e.target.value);
       conversor();
     }
   };
+
   const onSubmit = (e) => {
     e.preventDefault();
     conversor();
@@ -146,7 +150,7 @@ const FormDivisa = () => {
           <option value="EUR">EUR</option>
           <option value="BTC">BTC</option>
           <option value="ETH">WTH</option>
-          <option value="DODGE">DODGE</option>
+          <option value="DOGE">DOGE</option>
         </Form.Select>
         <select
           id="divdo"
@@ -159,8 +163,8 @@ const FormDivisa = () => {
           <option value="USD">USD</option>
           <option value="EUR">EUR</option>
           <option value="BTC">BTC</option>
-          <option value="ETH">WTH</option>
-          <option value="DODGE">DODGE</option>
+          <option value="ETH">ETH</option>
+          <option value="DOGE">DOGE</option>
         </select>
       </Form.Group>
       <button>Cambiar</button>
